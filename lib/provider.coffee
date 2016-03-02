@@ -1,7 +1,25 @@
 module.exports =
+  inclusionPriority: 1
+  suggesionPriority: 2
   selector: '*'
 
-  getSuggestions: ({prefix}) ->
+  getSuggestions: (request) ->
+    # @getLongSuggestions(request)
+    @getLotsAndLotsOfSuggestions(request)
+
+  getLotsAndLotsOfSuggestions: ({prefix}) ->
+    return unless prefix.startsWith('lot')
+    numSuggestions = parseInt(Math.random() * 3000)
+    results = []
+    for i in [0...numSuggestions]
+      results.push
+        type: 'function'
+        text: "#{prefix}#{i}"
+        leftLabel: 'string'
+        rightLabel: 'something'
+    results
+
+  getLongSuggestions: ({prefix}) ->
     if prefix.startsWith('over')
       [{
         type: 'function'
